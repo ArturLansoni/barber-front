@@ -1,14 +1,28 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { loginBarber } from "../../services/api";
+import { setAccessToken } from "../../infra";
 import "./login-styles.css";
 
 const LoginPage = () => {
+  const history = useHistory();
   const [state, setState] = useState({
     email: "",
     password: "",
   });
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+
+    const barber = await loginBarber({
+      email: state.email,
+      password: state.password,
+    });
+    if (barber) {
+      setAccessToken(barber.data.accessToken);
+      history.push("/");
+      return;
+    }
   };
 
   const handleChange = (e) => {
