@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { Button } from "react-bootstrap";
 import { loginBarber } from "../../services/api";
 import { setAccessToken } from "../../infra";
 import "./login-styles.css";
@@ -19,7 +20,7 @@ const LoginPage = () => {
       password: state.password,
     });
     if (barber) {
-      setAccessToken(barber.data.accessToken);
+      setAccessToken(barber.accessToken);
       history.push("/");
       return;
     }
@@ -53,8 +54,8 @@ const LoginPage = () => {
         />
       </div>
 
-      <button type="submit">Login</button>
-      <button type="button">Cadastrar</button>
+      <Button type="submit">Login</Button>
+      <Button type="button">Cadastrar</Button>
     </form>
   );
 };
