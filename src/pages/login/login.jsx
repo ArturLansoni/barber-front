@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button} from "react-bootstrap";
 import { loginBarber } from "../../services/api";
 import { setAccessToken } from "../../infra";
 import "./login-styles.css";
@@ -32,30 +32,32 @@ const LoginPage = () => {
 
   return (
     <form onSubmit={onSubmit}>
+    <div class="login-box">
       <h1>Bem vindo</h1>
-
-      <div>
-        <label>Email</label>
+      <div class="textbox">
+        <i class="fa fa-user" aria-hidden='true'></i>
         <input
           id="email"
           type="email"
+          placeholder="Email"
           value={state.email}
           onChange={handleChange}
         />
       </div>
 
-      <div>
-        <label>Senha</label>
+      <div class="textbox">
+        <i class="fa fa-lock" aria-hidden="true"></i>
         <input
           id="password"
           type="password"
+          placeholder="Senha"
           value={state.password}
           onChange={handleChange}
         />
       </div>
-
-      <Button type="submit">Login</Button>
-      <Button type="button">Cadastrar</Button>
+      <Button classname="btn" type="submit">Login</Button>
+      <Button classname="btn" type="button">Cadastrar</Button>
+    </div>
     </form>
   );
 };
