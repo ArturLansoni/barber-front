@@ -34,32 +34,36 @@ const LoginPage = () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <h1>Bem vindo</h1>
+      <div class="login-box">
+        <h1>Bem vindo</h1>
+        <div class="textbox">
+          <i class="fa fa-user" aria-hidden="true"></i>
+          <input
+            id="email"
+            type="email"
+            placeholder="Email"
+            value={state.email}
+            onChange={handleChange}
+          />
+        </div>
 
-      <div>
-        <label>Email</label>
-        <input
-          id="email"
-          type="email"
-          value={state.email}
-          onChange={handleChange}
-        />
+        <div class="textbox">
+          <i class="fa fa-lock" aria-hidden="true"></i>
+          <input
+            id="password"
+            type="password"
+            placeholder="Senha"
+            value={state.password}
+            onChange={handleChange}
+          />
+        </div>
+        <Button classname="btn" type="submit">
+          Login
+        </Button>
+        <Button classname="btn" type="button" onClick={goToRegisterPage}>
+          Cadastrar
+        </Button>
       </div>
-
-      <div>
-        <label>Senha</label>
-        <input
-          id="password"
-          type="password"
-          value={state.password}
-          onChange={handleChange}
-        />
-      </div>
-
-      <Button type="submit">Login</Button>
-      <Button type="button" onClick={goToRegisterPage}>
-        Cadastrar
-      </Button>
     </form>
   );
 };
