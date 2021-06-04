@@ -30,6 +30,8 @@ const LoginPage = () => {
     setState((old) => ({ ...old, [e.target.id]: e.target.value }));
   };
 
+  const goToRegisterPage = () => history.push("/sign-up");
+
   return (
     <form onSubmit={onSubmit}>
       <h1>Bem vindo</h1>
@@ -55,7 +57,9 @@ const LoginPage = () => {
       </div>
 
       <Button type="submit">Login</Button>
-      <Button type="button">Cadastrar</Button>
+      <Button type="button" onClick={goToRegisterPage}>
+        Cadastrar
+      </Button>
     </form>
   );
 };
