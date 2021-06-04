@@ -15,3 +15,8 @@ export const findCurrentBarber = async () => {
   const response = await httpClient.get("/barber/me");
   return handleResponse(response);
 };
+
+export const createBarber = async (barber) => {
+  const response = await httpClient.post("/barber", barber);
+  return handleResponse(response);
+};
