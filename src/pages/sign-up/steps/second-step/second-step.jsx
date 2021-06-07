@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Form, Row } from "react-bootstrap";
 import { SignUpContext } from "../../sign-up-context";
 
 const SecondStep = () => {
@@ -11,60 +11,70 @@ const SecondStep = () => {
   };
 
   return (
-    <form onSubmit={nextStep}>
+    <Form onSubmit={nextStep}>
       <h1>Cadastro</h1>
 
-      <div>
-        <label>CEP</label>
-        <input
+      <Form.Group>
+        <Form.Control
           id="zipCode"
+          placeholder="CEP"
           value={state.address.zipCode}
           onChange={handleChange}
         />
-      </div>
+      </Form.Group>
 
-      <div>
-        <label>Rua</label>
-        <input
+      <Form.Group>
+        <Form.Control
           id="street"
+          placeholder="Rua"
           value={state.address.street}
           onChange={handleChange}
         />
-      </div>
+      </Form.Group>
 
-      <div>
-        <label>Número</label>
-        <input
+      <Form.Group>
+        <Form.Control
           id="number"
+          placeholder="Número"
           value={state.address.number}
           onChange={handleChange}
         />
-      </div>
+      </Form.Group>
 
-      <div>
-        <label>Bairro</label>
-        <input
+      <Form.Group>
+        <Form.Control
           id="neighborhood"
+          placeholder="Bairro"
           value={state.address.neighborhood}
           onChange={handleChange}
         />
-      </div>
+      </Form.Group>
 
-      <div>
-        <label>Cidade</label>
-        <input id="city" value={state.address.city} onChange={handleChange} />
-      </div>
+      <Form.Group>
+        <Form.Control
+          id="city"
+          placeholder="Cidade"
+          value={state.address.city}
+          onChange={handleChange}
+        />
+      </Form.Group>
 
-      <div>
-        <label>Estado</label>
-        <input id="state" value={state.address.state} onChange={handleChange} />
-      </div>
+      <Form.Group>
+        <Form.Control
+          id="state"
+          placeholder="Estado"
+          value={state.address.state}
+          onChange={handleChange}
+        />
+      </Form.Group>
 
-      <Button type="button" onClick={backStep}>
-        Voltar
-      </Button>
-      <Button type="submit">Continuar</Button>
-    </form>
+      <div className="spaced-row">
+        <Button variant="outline-secondary" type="button" onClick={backStep}>
+          Voltar
+        </Button>
+        <Button type="submit">Continuar</Button>
+      </div>
+    </Form>
   );
 };
 

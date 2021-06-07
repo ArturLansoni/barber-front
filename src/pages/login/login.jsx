@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { loginBarber } from "../../services/api";
 import { setAccessToken } from "../../infra";
 import "./login-styles.css";
@@ -33,38 +33,40 @@ const LoginPage = () => {
   const goToRegisterPage = () => history.push("/sign-up");
 
   return (
-    <form onSubmit={onSubmit}>
-      <div class="login-box">
+    <div className="page-container">
+      <Form className="card" onSubmit={onSubmit}>
         <h1>Bem vindo</h1>
-        <div class="textbox">
+        <Form.Group>
           <i class="fa fa-user" aria-hidden="true"></i>
-          <input
+          <Form.Control
             id="email"
             type="email"
             placeholder="Email"
             value={state.email}
             onChange={handleChange}
           />
-        </div>
+        </Form.Group>
 
-        <div class="textbox">
+        <Form.Group>
           <i class="fa fa-lock" aria-hidden="true"></i>
-          <input
+          <Form.Control
             id="password"
             type="password"
             placeholder="Senha"
             value={state.password}
             onChange={handleChange}
           />
-        </div>
-        <Button classname="btn" type="submit">
-          Login
-        </Button>
-        <Button classname="btn" type="button" onClick={goToRegisterPage}>
+        </Form.Group>
+        <Button type="submit">Login</Button>
+        <Button
+          variant="outline-secondary"
+          type="button"
+          onClick={goToRegisterPage}
+        >
           Cadastrar
         </Button>
-      </div>
-    </form>
+      </Form>
+    </div>
   );
 };
 

@@ -1,56 +1,64 @@
 import React, { useContext } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { SignUpContext } from "../../sign-up-context";
 
 const FirstStep = () => {
   const { state, nextStep, handleChange } = useContext(SignUpContext);
 
   return (
-    <form onSubmit={nextStep}>
+    <Form onSubmit={nextStep}>
       <h1>Cadastro</h1>
 
-      <div>
-        <label>Nome</label>
-        <input id="name" value={state.name} onChange={handleChange} />
-      </div>
+      <Form.Group>
+        <Form.Control
+          id="name"
+          placeholder="Nome"
+          value={state.name}
+          onChange={handleChange}
+        />
+      </Form.Group>
 
-      <div>
-        <label>Telefone</label>
-        <input id="telephone" value={state.telephone} onChange={handleChange} />
-      </div>
+      <Form.Group>
+        <Form.Control
+          id="telephone"
+          placeholder="Telefone"
+          value={state.telephone}
+          onChange={handleChange}
+        />
+      </Form.Group>
 
-      <div>
-        <label>Email</label>
-        <input
+      <Form.Group>
+        <Form.Control
           id="email"
           type="email"
+          placeholder="Email"
           value={state.email}
           onChange={handleChange}
         />
-      </div>
+      </Form.Group>
 
-      <div>
-        <label>Senha</label>
-        <input
+      <Form.Group>
+        <Form.Control
           id="password"
           type="password"
+          placeholder="Senha"
           value={state.password}
           onChange={handleChange}
         />
-      </div>
+      </Form.Group>
 
-      <div>
-        <label>Confirmar senha</label>
-        <input
+      <Form.Group>
+        <Form.Control
           id="passwordConfirmation"
           type="password"
+          placeholder="Confirmar senha"
           value={state.passwordConfirmation}
           onChange={handleChange}
         />
-      </div>
+      </Form.Group>
 
       <Button type="submit">Continuar</Button>
-    </form>
+    </Form>
   );
 };
 

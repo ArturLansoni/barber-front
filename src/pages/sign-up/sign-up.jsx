@@ -6,11 +6,13 @@ const SignUpPage = () => {
   const { state } = useContext(SignUpContext);
 
   return (
-    <>
-      {state.step === 0 && <FirstStep />}
-      {state.step === 1 && <SecondStep />}
-      {state.step === 2 && <ThirdStep />}
-    </>
+    <div className="page-container">
+      <div className="card">
+        {state.step === 0 && <FirstStep />}
+        {state.step === 1 && <SecondStep />}
+        {state.step === 2 && <ThirdStep />}
+      </div>
+    </div>
   );
 };
 
