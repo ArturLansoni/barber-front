@@ -1,4 +1,6 @@
 import React, { createContext, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import { createBarber } from "../../services/api";
 
 export const SignUpContext = createContext({
@@ -20,6 +22,7 @@ export const SignUpContext = createContext({
 });
 
 export const SignUpProvider = ({ children }) => {
+  const history = useHistory();
   const [state, setState] = useState({
     step: 0,
     name: "",
@@ -66,9 +69,12 @@ export const SignUpProvider = ({ children }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     const isValid = validate(state);
-    if (!isValid) return;
+    if (!isValid) {
+      toast.error("Todos os campos devem ser preenchidos!");
+      return;
+    }
 
-    await createBarber({
+    const barber = await createBarber({
       name: state.name,
       telephone: state.telephone,
       email: state.email,
@@ -76,6 +82,11 @@ export const SignUpProvider = ({ children }) => {
       address: state.address,
       password: state.password,
     });
+
+    if (barber) {
+      history.push("/login");
+      toast.success("Barbeiro cadastrado com sucesso!");
+    }
   };
 
   const nextStep = () => {

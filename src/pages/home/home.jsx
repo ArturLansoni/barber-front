@@ -1,10 +1,114 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import {
+  findCurrentBarberServices,
+  createService,
+  deleteService,
+} from "../../services/api";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
+import { Spinner, Button } from "react-bootstrap";
+import { clearLocalStorage } from "../../infra/local-storage/local-storage";
+import { ServiceItem, NewServiceItem } from "./sub-components";
+import "./home-styles.css";
 
 const HomePage = () => {
-  useEffect(() => {}, []);
+  const history = useHistory();
+  const [isLoading, setIsLoading] = useState(false);
+  const [services, setServices] = useState([]);
+  const [newService, setNewService] = useState({
+    price: "",
+    description: "",
+    image: "",
+    estimatedTime: "",
+  });
+
+  useEffect(() => {
+    findServices();
+  }, []);
+
+  const findServices = async () => {
+    setIsLoading(true);
+    const services = await findCurrentBarberServices();
+    setServices(services || []);
+    setIsLoading(false);
+  };
+
+  const handleNewServiceChange = (e) => {
+    setNewService((old) => ({ ...old, [e.target.id]: e.target.value }));
+  };
+
+  const onLogOut = () => {
+    clearLocalStorage();
+    history.push("/login");
+  };
+
+  const onDelete = async (serviceId) => {
+    setIsLoading(true);
+    await deleteService(serviceId);
+    await findServices();
+    setIsLoading(false);
+  };
+
+  const onSave = async () => {
+    setIsLoading(true);
+
+    if (
+      !newService.price ||
+      !newService.description ||
+      !newService.image ||
+      !newService.estimatedTime
+    ) {
+      setIsLoading(false);
+      return;
+    }
+
+    await createService(newService);
+    setNewService({
+      price: "",
+      description: "",
+      image: "",
+      estimatedTime: "",
+    });
+
+    toast.success("Serviço cadastrado com sucesso!");
+    await findServices();
+    setIsLoading(false);
+  };
+
   return (
-    <div>
-      <h1>home</h1>
+    <div className="home-page-container">
+      <header>
+        <h1>✂ Lista de serviços</h1>
+        <Button variant="danger" size="sm" onClick={onLogOut} type="button">
+          LOGOUT
+        </Button>
+      </header>
+
+      <ul>
+        <NewServiceItem
+          isLoading={isLoading}
+          price={newService.price}
+          description={newService.description}
+          image={newService.image}
+          estimatedTime={newService.estimatedTime}
+          handleChange={handleNewServiceChange}
+          onSave={onSave}
+        />
+        {!services.length && isLoading && (
+          <Spinner animation="border" role="status" size="sm" />
+        )}
+        {services.map((i) => (
+          <ServiceItem
+            isLoading={isLoading}
+            key={i._id}
+            price={i.price}
+            description={i.description}
+            image={i.image}
+            estimatedTime={i.estimatedTime}
+            onDelete={() => onDelete(i._id)}
+          />
+        ))}
+      </ul>
     </div>
   );
 };

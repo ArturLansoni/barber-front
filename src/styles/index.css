@@ -4,9 +4,21 @@
   font-family: "Roboto", sans-serif;
 }
 
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+  padding: 0;
+}
 button {
   cursor: pointer;
   user-select: none;
+  font-weight: bold !important;
+}
+button > div {
+  margin-right: 0.5em;
 }
 
 .page-container {
