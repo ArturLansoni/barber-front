@@ -1,7 +1,11 @@
 export const setAccessToken = (accessToken) => {
-  return localStorage.setItem("@barber:access-token", accessToken);
+  localStorage.setItem("@barber:access-token", accessToken);
 };
 
 export const getAccessToken = () => {
   return localStorage.getItem("@barber:access-token");
+};
+
+export const clearLocalStorage = () => {
+  localStorage.removeItem("@barber:access-token");
 };
