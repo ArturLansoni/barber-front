@@ -16,7 +16,7 @@ const HomePage = () => {
 
   useEffect(() => {
     findServices();
-  }, []);
+  }, [findServices]);
 
   return (
     <div className="home-page-container">
