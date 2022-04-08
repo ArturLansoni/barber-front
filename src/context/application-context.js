@@ -10,7 +10,7 @@ export const ApplicationProvider = ({ children }) => {
   const accessToken = getAccessToken();
   const history = useHistory();
 
-  const [state, setState] = useState({
+  const [state] = useState({
     barber: null,
   });
 
@@ -18,7 +18,7 @@ export const ApplicationProvider = ({ children }) => {
     if (!accessToken) {
       history.push("/login");
     }
-  }, [accessToken]);
+  }, [accessToken, history]);
 
   return (
     <ApplicationContext.Provider

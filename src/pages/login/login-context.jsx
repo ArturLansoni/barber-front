@@ -1,33 +1,31 @@
 import React, { createContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-import { createBarber } from "../../services/api";
+import { setAccessToken } from "../../infra";
+import { loginBarber } from "../../services/api";
 
-export const SignUpContext = createContext({
+export const LoginContext = createContext({
   state: {
-    name: "",
     email: "",
     password: "",
-    passwordConfirmation: "",
     isLoading: false,
   },
   handleChange: () => {},
   onSubmit: () => {},
-  goBack: () => {},
+  goToRegisterPage: () => {},
 });
 
-export const SignUpProvider = ({ children }) => {
+export const LoginProvider = ({ children }) => {
   const history = useHistory();
   const [state, setState] = useState({
-    name: "",
     email: "",
     password: "",
-    passwordConfirmation: "",
     isLoading: false,
   });
 
-  const validate = ({ name, email, password, passwordConfirmation }) => {
-    if (!name || !email || !password || !passwordConfirmation) return false;
+  const validate = ({ email, password }) => {
+    if (!email || !password) return false;
+
     return true;
   };
 
@@ -47,33 +45,32 @@ export const SignUpProvider = ({ children }) => {
       return;
     }
 
-    const barber = await createBarber({
-      name: state.name,
+    const barber = await loginBarber({
       email: state.email,
       password: state.password,
     });
 
     if (barber) {
-      history.push("/login");
-      toast.success("Barbeiro cadastrado com sucesso!");
+      setAccessToken(barber.accessToken);
+      history.push("/");
     }
     setState((old) => ({ ...old, isLoading: false }));
   };
 
-  const goBack = () => {
-    history.push("/login");
+  const goToRegisterPage = () => {
+    history.push("/sign-up");
   };
 
   return (
-    <SignUpContext.Provider
+    <LoginContext.Provider
       value={{
         state,
         handleChange,
         onSubmit,
-        goBack,
+        goToRegisterPage,
       }}
     >
       {children}
-    </SignUpContext.Provider>
+    </LoginContext.Provider>
   );
 };

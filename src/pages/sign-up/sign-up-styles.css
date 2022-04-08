@@ -1,4 +1,4 @@
-.login-page-container {
+.sign-up-page-container {
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -7,7 +7,7 @@
   background-color: #f4f4f4;
 }
 
-.login-form-container {
+.sign-up-form-container {
   width: 100%;
   max-width: 400px;
   margin: 0 20px;
@@ -17,6 +17,6 @@
   gap: 14px;
 }
 
-.login-form-container h1 {
+.sign-up-form-container h1 {
   font-weight: bold;
 }
