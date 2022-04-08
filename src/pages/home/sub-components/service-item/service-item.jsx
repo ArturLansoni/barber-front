@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Button, Spinner } from "react-bootstrap";
+import { Button, Spinner } from "../../../../components";
 
 const ServiceItem = ({
   isLoading = false,
@@ -11,7 +11,7 @@ const ServiceItem = ({
 }) => (
   <li>
     {image ? (
-      <Image className="image-container" src={image} alt={description} />
+      <img className="image-container" src={image} alt={description} />
     ) : (
       <div className="image-container" />
     )}

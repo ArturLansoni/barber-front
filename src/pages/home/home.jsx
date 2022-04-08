@@ -6,7 +6,7 @@ import {
 } from "../../services/api";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Spinner, Button } from "react-bootstrap";
+import { Button, Spinner } from "../../components";
 import { clearLocalStorage } from "../../infra/local-storage/local-storage";
 import { ServiceItem, NewServiceItem } from "./sub-components";
 import "./home-styles.css";
@@ -29,7 +29,16 @@ const HomePage = () => {
   const findServices = async () => {
     setIsLoading(true);
     const services = await findCurrentBarberServices();
-    setServices(services || []);
+    setServices(
+      services || [
+        {
+          price: "100",
+          description: "Apenas um teste",
+          image: "https://github.com/ArturLansoni.png",
+          estimatedTime: "100",
+        },
+      ]
+    );
     setIsLoading(false);
   };
 
@@ -79,7 +88,7 @@ const HomePage = () => {
     <div className="home-page-container">
       <header>
         <h1>✂ Lista de serviços</h1>
-        <Button variant="danger" size="sm" onClick={onLogOut} type="button">
+        <Button color="error" onClick={onLogOut}>
           LOGOUT
         </Button>
       </header>
@@ -94,9 +103,7 @@ const HomePage = () => {
           handleChange={handleNewServiceChange}
           onSave={onSave}
         />
-        {!services.length && isLoading && (
-          <Spinner animation="border" role="status" size="sm" />
-        )}
+        {!services.length && isLoading && <Spinner />}
         {services.map((i) => (
           <ServiceItem
             isLoading={isLoading}

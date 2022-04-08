@@ -1,5 +1,6 @@
+import { FormGroup } from "@mui/material";
 import React from "react";
-import { Image, Button, Form, Spinner } from "react-bootstrap";
+import { Button, Input } from "../../../../components";
 
 const NewServiceItem = ({
   isLoading = false,
@@ -12,59 +13,50 @@ const NewServiceItem = ({
 }) => (
   <li>
     {image ? (
-      <Image className="image-container" src={image} alt={description} />
+      <img className="image-container" src={image} alt={description} />
     ) : (
       <div className="image-container" />
     )}
     <div className="new-service-item-content">
       <div className="row">
         <div>
-          <Form.Group>
-            <Form.Control
+          <FormGroup>
+            <Input
               id="image"
-              size="sm"
-              placeholder="Imagem"
+              label="Imagem"
               type="url"
               value={image}
               onChange={handleChange}
             />
-          </Form.Group>
-          <Form.Group>
-            <Form.Control
+            <Input
               id="description"
-              size="sm"
-              placeholder="Descrição"
+              label="Descrição"
               value={description}
               onChange={handleChange}
             />
-          </Form.Group>
+          </FormGroup>
         </div>
         <div>
-          <Form.Group>
-            <Form.Control
+          <FormGroup>
+            <Input
               id="estimatedTime"
-              size="sm"
               type="number"
-              placeholder="Tempo estimado"
+              label="Tempo estimado"
               value={estimatedTime}
               onChange={handleChange}
             />
-          </Form.Group>
-          <Form.Group>
-            <Form.Control
+            <Input
               id="price"
-              size="sm"
               type="number"
-              placeholder="Preço"
+              label="Preço"
               value={price}
               onChange={handleChange}
             />
-          </Form.Group>
+          </FormGroup>
         </div>
       </div>
       <div className="right-container">
-        <Button variant="success" onClick={onSave} type="button">
-          {isLoading && <Spinner animation="border" role="status" size="sm" />}
+        <Button color="success" onClick={onSave} isLoading={isLoading}>
           SALVAR
         </Button>
       </div>
