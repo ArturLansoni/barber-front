@@ -8,6 +8,7 @@ export const LoginContext = createContext({
   state: {
     email: "",
     password: "",
+    isLoading: false,
   },
   handleChange: () => {},
   onSubmit: () => {},
