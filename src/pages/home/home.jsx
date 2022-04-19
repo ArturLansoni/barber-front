@@ -2,14 +2,21 @@ import React, { useContext, useEffect } from "react";
 import { Button, Spinner } from "../../components";
 import { ServiceItem, NewServiceItem } from "./sub-components";
 import { HomeContext, HomeProvider } from "./home-context";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import "./home-styles.css";
 
 const HomePage = () => {
   const {
     state,
     findServices,
-    onDelete,
     onLogOut,
+    onOpenDeleteConfirmDialog,
+    onCloseDialog,
+    onDelete,
     onCreateService,
     onEditService
   } = useContext(HomeContext);
@@ -45,10 +52,32 @@ const HomePage = () => {
             image={i.image}
             estimatedTime={i.estimatedTime}
             onEdit={() => onEditService(i)}
-            onDelete={() => onDelete(i._id)}
+            onDelete={() => onOpenDeleteConfirmDialog(i._id, i.description)}
           />
         ))}
       </ul>
+
+      <Dialog
+        open={state.dialog.open}
+        onClose={onCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Use Google's location service?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {`Você tem certeza que deseja excluir ${state.dialog.description}?`}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={onCloseDialog} variant="outlined" color="error">Cancelar</Button>
+          <Button onClick={() => onDelete(state.dialog.id)} autoFocus color="secondary">
+            Excluir
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

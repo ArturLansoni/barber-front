@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { clearLocalStorage } from "../../infra";
 import {
-  createService,
   deleteService,
   findCurrentBarberServices,
 } from "../../services/api";
@@ -12,11 +11,16 @@ export const HomeContext = createContext({
   state: {
     services: [],
     isLoading: false,
+    dialog: {
+      id: "",
+      open: false,
+      description: ""
+    }
   },
-  onSubmit: () => {},
   findServices: () => {},
-  handleNewServiceChange: () => {},
   onLogOut: () => {},
+  onOpenDeleteConfirmDialog: () => {},
+  onCloseDialog: () => {},
   onDelete: () => {},
   onCreateService: () => {},
   onEditService: () => {}
@@ -27,6 +31,11 @@ export const HomeProvider = ({ children }) => {
   const [state, setState] = useState({
     services: [],
     isLoading: false,
+    dialog: {
+      id: "",
+      open: false,
+      description: ""
+    }
   });
 
   const findServices = async () => {
@@ -35,23 +44,46 @@ export const HomeProvider = ({ children }) => {
     setState((old) => ({ ...old, isLoading: false, services: services || [] }));
   };
 
-  const handleNewServiceChange = (e) => {
-    setState((old) => ({
-      ...old,
-      newService: { ...old.newService, [e.target.id]: e.target.value },
-    }));
-  };
-
   const onLogOut = () => {
     clearLocalStorage();
     history.push("/login");
   };
 
+  const onOpenDeleteConfirmDialog = (id, description) => {
+    setState(old => ({
+      ...old,
+      dialog: {
+        id: id,
+        open: true,
+        description: description
+      }
+    }))
+  }
+
+  const onCloseDialog = () => {
+    setState(old => ({
+      ...old,
+      dialog: {
+        id: "",
+        open: false,
+        description: ""
+      }
+    }))
+  }
+
   const onDelete = async (serviceId) => {
     setState((old) => ({ ...old, isLoading: true }));
     await deleteService(serviceId);
     await findServices();
-    setState((old) => ({ ...old, isLoading: false }));
+    setState((old) => ({ 
+      ...old, 
+      isLoading: false , 
+      dialog: {
+        id: "",
+        open: false,
+        description: ""
+      }
+    }));
   };
 
   const onCreateService = () => {
@@ -70,8 +102,9 @@ export const HomeProvider = ({ children }) => {
       value={{
         state,
         findServices,
-        handleNewServiceChange,
         onLogOut,
+        onOpenDeleteConfirmDialog,
+        onCloseDialog,
         onDelete,
         onCreateService,
         onEditService
