@@ -8,11 +8,10 @@ const HomePage = () => {
   const {
     state,
     findServices,
-    handleNewServiceChange,
     onDelete,
     onLogOut,
-    onSave,
-    onCreateService
+    onCreateService,
+    onEditService
   } = useContext(HomeContext);
 
   useEffect(() => {
@@ -45,6 +44,7 @@ const HomePage = () => {
             description={i.description}
             image={i.image}
             estimatedTime={i.estimatedTime}
+            onEdit={() => onEditService(i)}
             onDelete={() => onDelete(i._id)}
           />
         ))}

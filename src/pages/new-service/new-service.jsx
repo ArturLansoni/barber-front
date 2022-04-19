@@ -55,7 +55,7 @@ const NewServicePage = () => {
 
 
         <Button type="submit" isLoading={state.isLoading}>
-          Criar
+          {state.isEditing ? 'Salvar' : 'Criar'}
         </Button>
         <Button variant="outline" onClick={goBack}>
           Voltar

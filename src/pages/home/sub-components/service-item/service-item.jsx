@@ -10,6 +10,7 @@ const ServiceItem = ({
   description = "",
   image = "",
   estimatedTime = "",
+  onEdit = () => {},
   onDelete = () => { },
 }) => (
   <li>
@@ -29,7 +30,7 @@ const ServiceItem = ({
       <div className="right-container">
         <p>R${price.toFixed(2).replace(".", ",")}</p>
         <div className="button-container">
-          <Button color="secondary" onClick={onDelete} type="button">
+          <Button color="secondary" onClick={onEdit} type="button">
             {isLoading && <Spinner animation="border" role="status" size="sm" />}
             <EditOutlinedIcon/>
           </Button>

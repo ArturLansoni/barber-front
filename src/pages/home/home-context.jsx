@@ -11,12 +11,6 @@ import {
 export const HomeContext = createContext({
   state: {
     services: [],
-    newService: {
-      price: null,
-      description: "",
-      image: "",
-      estimatedTime: null,
-    },
     isLoading: false,
   },
   onSubmit: () => {},
@@ -24,20 +18,14 @@ export const HomeContext = createContext({
   handleNewServiceChange: () => {},
   onLogOut: () => {},
   onDelete: () => {},
-  onSave: () => {},
-  onCreateService: () => {}
+  onCreateService: () => {},
+  onEditService: () => {}
 });
 
 export const HomeProvider = ({ children }) => {
   const history = useHistory();
   const [state, setState] = useState({
     services: [],
-    newService: {
-      price: null,
-      description: "",
-      image: "",
-      estimatedTime: null,
-    },
     isLoading: false,
   });
 
@@ -66,40 +54,15 @@ export const HomeProvider = ({ children }) => {
     setState((old) => ({ ...old, isLoading: false }));
   };
 
-  const onSave = async () => {
-    setState((old) => ({ ...old, isLoading: true }));
-
-    if (
-      !state.newService.price ||
-      !state.newService.description ||
-      !state.newService.image ||
-      !state.newService.estimatedTime
-    ) {
-      setState((old) => ({ ...old, isLoading: false }));
-      return;
-    }
-
-    await createService({
-      ...state.newService,
-      estimatedTime: Number(state.newService.estimatedTime),
-    });
-
-    toast.success("Serviço cadastrado com sucesso!");
-    await findServices();
-    setState((old) => ({
-      ...old,
-      isLoading: false,
-      newService: {
-        price: "",
-        description: "",
-        image: "",
-        estimatedTime: "",
-      },
-    }));
-  };
-
   const onCreateService = () => {
     history.push('./new-service')
+  }
+
+  const onEditService = (service) => {
+      history.push({
+        pathname: './new-service',
+        state: {service: service}
+      })
   }
 
   return (
@@ -110,8 +73,8 @@ export const HomeProvider = ({ children }) => {
         handleNewServiceChange,
         onLogOut,
         onDelete,
-        onSave,
-        onCreateService
+        onCreateService,
+        onEditService
       }}
     >
       {children}

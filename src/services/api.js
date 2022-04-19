@@ -57,3 +57,10 @@ export const deleteService = async (serviceId) => {
     .catch(handleError);
   return handleResponse(response);
 };
+
+export const updateService = async (service) => {
+  const response = await httpClient
+    .put(`/service/${service._id}`, service)
+    .catch(handleError);
+  return handleResponse(response)
+}
