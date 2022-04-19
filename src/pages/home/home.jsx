@@ -12,31 +12,30 @@ const HomePage = () => {
     onDelete,
     onLogOut,
     onSave,
+    onCreateService
   } = useContext(HomeContext);
 
   useEffect(() => {
     findServices();
-  }, [findServices]);
+  }, []);
 
   return (
     <div className="home-page-container">
       <header>
-        <h1>✂ Lista de serviços</h1>
+        <h1>Barberbook</h1>
         <Button color="error" onClick={onLogOut}>
           LOGOUT
         </Button>
       </header>
 
+      <div className="home-title">
+        <h2>Serviços</h2>
+        <Button type="button" color="secondary" onClick={onCreateService}>
+          + Novo Serviço
+        </Button>
+      </div>
+
       <ul>
-        <NewServiceItem
-          isLoading={state.isLoading}
-          price={state.newService.price}
-          description={state.newService.description}
-          image={state.newService.image}
-          estimatedTime={state.newService.estimatedTime}
-          handleChange={handleNewServiceChange}
-          onSave={onSave}
-        />
         {!state.services.length && state.isLoading && <Spinner />}
         {state.services.map((i) => (
           <ServiceItem

@@ -25,6 +25,7 @@ export const HomeContext = createContext({
   onLogOut: () => {},
   onDelete: () => {},
   onSave: () => {},
+  onCreateService: () => {}
 });
 
 export const HomeProvider = ({ children }) => {
@@ -97,6 +98,10 @@ export const HomeProvider = ({ children }) => {
     }));
   };
 
+  const onCreateService = () => {
+    history.push('./new-service')
+  }
+
   return (
     <HomeContext.Provider
       value={{
@@ -106,6 +111,7 @@ export const HomeProvider = ({ children }) => {
         onLogOut,
         onDelete,
         onSave,
+        onCreateService
       }}
     >
       {children}

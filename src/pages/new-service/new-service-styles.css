@@ -1,0 +1,22 @@
+.new-service-page-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  background-color: #f4f4f4;
+}
+
+.new-service-form-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.new-service-form-container h1 {
+  font-size: 40px;
+  margin: 20px 0px;
+}
