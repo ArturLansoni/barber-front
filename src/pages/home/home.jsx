@@ -16,12 +16,12 @@ const HomePage = () => {
 
   useEffect(() => {
     findServices();
-  }, [findServices]);
+  }, []);
 
   return (
     <div className="home-page-container">
       <header>
-        <h1>✂ Lista de serviços</h1>
+        <h1>✂ Barber Book</h1>
         <Button color="error" onClick={onLogOut}>
           LOGOUT
         </Button>

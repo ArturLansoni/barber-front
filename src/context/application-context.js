@@ -3,15 +3,19 @@ import { useHistory } from "react-router-dom";
 import { getAccessToken } from "../infra";
 
 export const ApplicationContext = createContext({
-  barber: null,
+  user: null,
+  userType: "",
+  setUser: () => {},
+  setUserType: () => {},
 });
 
 export const ApplicationProvider = ({ children }) => {
   const accessToken = getAccessToken();
   const history = useHistory();
 
-  const [state] = useState({
-    barber: null,
+  const [state, setState] = useState({
+    user: null,
+    userType: "",
   });
 
   useEffect(() => {
@@ -20,10 +24,15 @@ export const ApplicationProvider = ({ children }) => {
     }
   }, [accessToken, history]);
 
+  const setUser = (user) => setState((old) => ({ ...old, user }));
+  const setUserType = (userType) => setState((old) => ({ ...old, userType }));
+
   return (
     <ApplicationContext.Provider
       value={{
-        barber: state.barber,
+        ...state.user,
+        setUser,
+        setUserType,
       }}
     >
       {children}
