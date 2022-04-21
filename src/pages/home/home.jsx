@@ -2,41 +2,46 @@ import React, { useContext, useEffect } from "react";
 import { Button, Spinner } from "../../components";
 import { ServiceItem, NewServiceItem } from "./sub-components";
 import { HomeContext, HomeProvider } from "./home-context";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import "./home-styles.css";
 
 const HomePage = () => {
   const {
     state,
     findServices,
-    handleNewServiceChange,
-    onDelete,
     onLogOut,
-    onSave,
+    onOpenDeleteConfirmDialog,
+    onCloseDialog,
+    onDelete,
+    onCreateService,
+    onEditService
   } = useContext(HomeContext);
 
   useEffect(() => {
     findServices();
-  }, [findServices]);
+  }, []);
 
   return (
     <div className="home-page-container">
       <header>
-        <h1>✂ Lista de serviços</h1>
+        <h1>Barberbook</h1>
         <Button color="error" onClick={onLogOut}>
           LOGOUT
         </Button>
       </header>
 
+      <div className="home-title">
+        <h2>Serviços</h2>
+        <Button type="button" color="secondary" onClick={onCreateService}>
+          + Novo Serviço
+        </Button>
+      </div>
+
       <ul>
-        <NewServiceItem
-          isLoading={state.isLoading}
-          price={state.newService.price}
-          description={state.newService.description}
-          image={state.newService.image}
-          estimatedTime={state.newService.estimatedTime}
-          handleChange={handleNewServiceChange}
-          onSave={onSave}
-        />
         {!state.services.length && state.isLoading && <Spinner />}
         {state.services.map((i) => (
           <ServiceItem
@@ -46,10 +51,33 @@ const HomePage = () => {
             description={i.description}
             image={i.image}
             estimatedTime={i.estimatedTime}
-            onDelete={() => onDelete(i._id)}
+            onEdit={() => onEditService(i)}
+            onDelete={() => onOpenDeleteConfirmDialog(i._id, i.description)}
           />
         ))}
       </ul>
+
+      <Dialog
+        open={state.dialog.open}
+        onClose={onCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Use Google's location service?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {`Você tem certeza que deseja excluir ${state.dialog.description}?`}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={onCloseDialog} variant="outlined" color="error">Cancelar</Button>
+          <Button onClick={() => onDelete(state.dialog.id)} autoFocus color="secondary">
+            Excluir
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
