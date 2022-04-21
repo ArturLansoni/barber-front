@@ -22,9 +22,9 @@ const handleError = (error) => {
   }
 };
 
-export const loginBarber = async ({ email = "", password = "" }) => {
+export const login = async ({ email = "", password = "" }) => {
   const response = await httpClient
-    .post("/barber/login", { email, password })
+    .post("/login", { email, password })
     .catch(handleError);
   return handleResponse(response);
 };

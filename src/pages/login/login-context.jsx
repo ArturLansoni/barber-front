@@ -2,7 +2,7 @@ import React, { createContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { setAccessToken } from "../../infra";
-import { loginBarber } from "../../services/api";
+import { login } from "../../services/api";
 
 export const LoginContext = createContext({
   state: {
@@ -25,7 +25,6 @@ export const LoginProvider = ({ children }) => {
 
   const validate = ({ email, password }) => {
     if (!email || !password) return false;
-
     return true;
   };
 
@@ -45,13 +44,13 @@ export const LoginProvider = ({ children }) => {
       return;
     }
 
-    const barber = await loginBarber({
+    const user = await login({
       email: state.email,
       password: state.password,
     });
 
-    if (barber) {
-      setAccessToken(barber.accessToken);
+    if (user) {
+      setAccessToken(user.accessToken);
       history.push("/");
     }
     setState((old) => ({ ...old, isLoading: false }));
