@@ -5,3 +5,4 @@ export { default as ClientHomePage } from "./client-pages/client-home/client-hom
 
 // Barber pages
 export { default as BarberHomePage } from "./barber-pages/barber-home/barber-home";
+export { default as NewServicePage } from "./barber-pages/new-service/new-service";
