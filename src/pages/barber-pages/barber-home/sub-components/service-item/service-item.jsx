@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Spinner } from "../../../../components";
+import { Button, Spinner } from "../../../../../components";
 
 const ServiceItem = ({
   isLoading = false,

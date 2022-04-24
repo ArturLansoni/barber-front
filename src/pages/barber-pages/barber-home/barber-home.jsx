@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from "react";
-import { Button, Spinner } from "../../components";
+import { Button, Spinner } from "../../../components";
 import { ServiceItem, NewServiceItem } from "./sub-components";
-import { HomeContext, HomeProvider } from "./home-context";
-import "./home-styles.css";
+import { BarberHomeContext, BarberHomeProvider } from "./barber-home-context";
+import "./barber-home-styles.css";
 
-const HomePage = () => {
+const BarberHomePage = () => {
   const {
     state,
     findServices,
@@ -12,11 +12,11 @@ const HomePage = () => {
     onDelete,
     onLogOut,
     onSave,
-  } = useContext(HomeContext);
+  } = useContext(BarberHomeContext);
 
   useEffect(() => {
     findServices();
-  }, []);
+  }, [findServices]);
 
   return (
     <div className="home-page-container">
@@ -55,9 +55,9 @@ const HomePage = () => {
 };
 
 const Page = () => (
-  <HomeProvider>
-    <HomePage />
-  </HomeProvider>
+  <BarberHomeProvider>
+    <BarberHomePage />
+  </BarberHomeProvider>
 );
 
 export default Page;

@@ -1,6 +1,6 @@
-import { FormGroup } from "@mui/material";
 import React from "react";
-import { Button, Input } from "../../../../components";
+import { FormGroup } from "@mui/material";
+import { Button, Input } from "../../../../../components";
 
 const NewServiceItem = ({
   isLoading = false,

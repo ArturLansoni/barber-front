@@ -1,14 +1,14 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-import { clearLocalStorage } from "../../infra";
+import { clearLocalStorage } from "../../../infra";
 import {
   createService,
   deleteService,
   findCurrentBarberServices,
-} from "../../services/api";
+} from "../../../services/api";
 
-export const HomeContext = createContext({
+export const BarberHomeContext = createContext({
   state: {
     services: [],
     newService: {
@@ -27,7 +27,7 @@ export const HomeContext = createContext({
   onSave: () => {},
 });
 
-export const HomeProvider = ({ children }) => {
+export const BarberHomeProvider = ({ children }) => {
   const history = useHistory();
   const [state, setState] = useState({
     services: [],
@@ -39,12 +39,12 @@ export const HomeProvider = ({ children }) => {
     },
     isLoading: false,
   });
-  console.log(state.isLoading);
-  const findServices = async () => {
+
+  const findServices = useCallback(async () => {
     setState((old) => ({ ...old, isLoading: true }));
     const services = await findCurrentBarberServices();
     setState((old) => ({ ...old, isLoading: false, services: services || [] }));
-  };
+  }, []);
 
   const handleNewServiceChange = (e) => {
     setState((old) => ({
@@ -98,7 +98,7 @@ export const HomeProvider = ({ children }) => {
   };
 
   return (
-    <HomeContext.Provider
+    <BarberHomeContext.Provider
       value={{
         state,
         findServices,
@@ -109,6 +109,6 @@ export const HomeProvider = ({ children }) => {
       }}
     >
       {children}
-    </HomeContext.Provider>
+    </BarberHomeContext.Provider>
   );
 };
