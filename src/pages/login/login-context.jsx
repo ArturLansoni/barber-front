@@ -1,6 +1,7 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
+import { ApplicationContext } from "../../context/application-context";
 import { setAccessToken } from "../../infra";
 import { login } from "../../services/api";
 
@@ -16,6 +17,7 @@ export const LoginContext = createContext({
 });
 
 export const LoginProvider = ({ children }) => {
+  const { setUser, setUserType } = useContext(ApplicationContext);
   const history = useHistory();
   const [state, setState] = useState({
     email: "",
@@ -48,8 +50,10 @@ export const LoginProvider = ({ children }) => {
       email: state.email,
       password: state.password,
     });
-
     if (user) {
+      const { userType, ...userData } = user;
+      setUser(userData);
+      setUserType(userType);
       setAccessToken(user.accessToken);
       history.push("/");
     }
