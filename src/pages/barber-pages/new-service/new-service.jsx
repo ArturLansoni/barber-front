@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { TextField } from "@mui/material";
 import {
   Description as DescriptionIcon,
@@ -7,12 +7,11 @@ import {
   Image as ImageIcon,
 } from "@mui/icons-material";
 import { Button } from "../../../components";
-import { NewServiceContext, NewServiceProvider } from "./new-service-context";
+import { NewServiceProvider, useNewService } from "./new-service-context";
 import "./new-service-styles.css";
 
 const NewServicePage = () => {
-  const { state, handleChange, onSubmit, goBack } =
-    useContext(NewServiceContext);
+  const { state, handleChange, onSubmit, goBack } = useNewService();
 
   return (
     <div className="new-service-page-container">

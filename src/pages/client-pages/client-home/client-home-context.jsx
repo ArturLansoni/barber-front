@@ -1,13 +1,13 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 
-export const ClientHomeContext = createContext({
+const ClientHomeContext = createContext({
   state: {
     isLoading: false,
   },
 });
 
-export const ClientHomeProvider = ({ children }) => {
-  const [state, setState] = useState({
+const ClientHomeProvider = ({ children }) => {
+  const [state] = useState({
     isLoading: false,
   });
 
@@ -21,3 +21,14 @@ export const ClientHomeProvider = ({ children }) => {
     </ClientHomeContext.Provider>
   );
 };
+
+function useClientHome() {
+  const context = useContext(ClientHomeContext);
+  if (!context) {
+    throw new Error("useClientHome must be used within an ClientHomeProvider.");
+  }
+
+  return context;
+}
+
+export { ClientHomeProvider, useClientHome };

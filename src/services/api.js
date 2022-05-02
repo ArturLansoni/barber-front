@@ -2,8 +2,8 @@ import { toast } from "react-toastify";
 import { httpClient } from "../infra";
 
 const handleResponse = (response) => {
-  if (!response || response.error) {
-    toast.error(response.error.message || "Ops, tente novamente mais tarde!");
+  if (!response || response?.error) {
+    toast.error(response?.error?.message || "Ops, tente novamente mais tarde!");
     return null;
   }
   const successStatusCode = [200, 201, 204];
@@ -29,8 +29,8 @@ export const login = async ({ email = "", password = "" }) => {
   return handleResponse(response);
 };
 
-export const findCurrentBarber = async () => {
-  const response = await httpClient.get("/barber/me").catch(handleError);
+export const findCurrentUser = async () => {
+  const response = await httpClient.get("/me").catch(handleError);
   return handleResponse(response);
 };
 
@@ -62,5 +62,5 @@ export const updateService = async (service) => {
   const response = await httpClient
     .put(`/service/${service._id}`, service)
     .catch(handleError);
-  return handleResponse(response)
-}
+  return handleResponse(response);
+};

@@ -1,11 +1,11 @@
 import React, { createContext, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-import { ApplicationContext } from "../../context/application-context";
+import { useApp } from "../../context/application-context";
 import { setAccessToken } from "../../infra";
 import { login } from "../../services/api";
 
-export const LoginContext = createContext({
+const LoginContext = createContext({
   state: {
     email: "",
     password: "",
@@ -16,8 +16,8 @@ export const LoginContext = createContext({
   goToRegisterPage: () => {},
 });
 
-export const LoginProvider = ({ children }) => {
-  const { setUser, setUserType } = useContext(ApplicationContext);
+const LoginProvider = ({ children }) => {
+  const { setUser, setUserType } = useApp();
   const history = useHistory();
   const [state, setState] = useState({
     email: "",
@@ -55,7 +55,11 @@ export const LoginProvider = ({ children }) => {
       setUser(userData);
       setUserType(userType);
       setAccessToken(user.accessToken);
-      history.push("/");
+      if (userType === "BARBER") {
+        history.push("/barber");
+      } else if (userType === "CLIENT") {
+        history.push("/client");
+      }
     }
     setState((old) => ({ ...old, isLoading: false }));
   };
@@ -77,3 +81,14 @@ export const LoginProvider = ({ children }) => {
     </LoginContext.Provider>
   );
 };
+
+function useLogin() {
+  const context = useContext(LoginContext);
+  if (!context) {
+    throw new Error("useLogin must be used within an LoginProvider.");
+  }
+
+  return context;
+}
+
+export { useLogin, LoginProvider };

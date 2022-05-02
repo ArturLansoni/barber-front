@@ -1,9 +1,9 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { createBarber } from "../../services/api";
 
-export const SignUpContext = createContext({
+const SignUpContext = createContext({
   state: {
     name: "",
     email: "",
@@ -16,7 +16,7 @@ export const SignUpContext = createContext({
   goBack: () => {},
 });
 
-export const SignUpProvider = ({ children }) => {
+const SignUpProvider = ({ children }) => {
   const history = useHistory();
   const [state, setState] = useState({
     name: "",
@@ -77,3 +77,14 @@ export const SignUpProvider = ({ children }) => {
     </SignUpContext.Provider>
   );
 };
+
+function useSignUp() {
+  const context = useContext(SignUpContext);
+  if (!context) {
+    throw new Error("useSignUp must be used within an SignUpProvider.");
+  }
+
+  return context;
+}
+
+export { useSignUp, SignUpProvider };

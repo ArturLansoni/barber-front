@@ -8,5 +8,5 @@ const override = css`
 `;
 
 export function Spinner(props) {
-  return <PulseLoader size="12" color="#fff" css={override} {...props} />;
+  return <PulseLoader size="12px" color="#fff" css={override} {...props} />;
 }

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   Dialog,
   DialogActions,
@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { Button, Spinner } from "../../../components";
 import { ServiceItem } from "./sub-components";
-import { BarberHomeContext, BarberHomeProvider } from "./barber-home-context";
+import { BarberHomeProvider, useBarberHome } from "./barber-home-context";
 import "./barber-home-styles.css";
 
 const BarberHomePage = () => {
@@ -21,7 +21,7 @@ const BarberHomePage = () => {
     onDelete,
     onCreateService,
     onEditService,
-  } = useContext(BarberHomeContext);
+  } = useBarberHome();
 
   useEffect(() => {
     findServices();
@@ -65,9 +65,7 @@ const BarberHomePage = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">Remover serviço</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             {`Você tem certeza que deseja excluir ${state.dialog.description}?`}
