@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Button, Input } from "../../components";
-import { SignUpContext, SignUpProvider } from "./sign-up-context";
+import { SignUpProvider, useSignUp } from "./sign-up-context";
 import "./sign-up-styles.css";
 
 const SignUpPage = () => {
-  const { state, handleChange, onSubmit, goBack } = useContext(SignUpContext);
+  const { state, handleChange, onSubmit, goBack } = useSignUp();
 
   return (
     <div className="sign-up-page-container">

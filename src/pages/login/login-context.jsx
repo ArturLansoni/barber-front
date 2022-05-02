@@ -1,10 +1,11 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useApp } from "../../context/application-context";
 import { setAccessToken } from "../../infra";
-import { loginBarber } from "../../services/api";
+import { login } from "../../services/api";
 
-export const LoginContext = createContext({
+const LoginContext = createContext({
   state: {
     email: "",
     password: "",
@@ -15,7 +16,8 @@ export const LoginContext = createContext({
   goToRegisterPage: () => {},
 });
 
-export const LoginProvider = ({ children }) => {
+const LoginProvider = ({ children }) => {
+  const { setUser, setUserType } = useApp();
   const history = useHistory();
   const [state, setState] = useState({
     email: "",
@@ -25,7 +27,6 @@ export const LoginProvider = ({ children }) => {
 
   const validate = ({ email, password }) => {
     if (!email || !password) return false;
-
     return true;
   };
 
@@ -45,14 +46,20 @@ export const LoginProvider = ({ children }) => {
       return;
     }
 
-    const barber = await loginBarber({
+    const user = await login({
       email: state.email,
       password: state.password,
     });
-
-    if (barber) {
-      setAccessToken(barber.accessToken);
-      history.push("/");
+    if (user) {
+      const { userType, ...userData } = user;
+      setUser(userData);
+      setUserType(userType);
+      setAccessToken(user.accessToken);
+      if (userType === "BARBER") {
+        history.push("/barber");
+      } else if (userType === "CLIENT") {
+        history.push("/client");
+      }
     }
     setState((old) => ({ ...old, isLoading: false }));
   };
@@ -74,3 +81,14 @@ export const LoginProvider = ({ children }) => {
     </LoginContext.Provider>
   );
 };
+
+function useLogin() {
+  const context = useContext(LoginContext);
+  if (!context) {
+    throw new Error("useLogin must be used within an LoginProvider.");
+  }
+
+  return context;
+}
+
+export { useLogin, LoginProvider };

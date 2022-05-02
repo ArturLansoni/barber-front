@@ -1,23 +1,23 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-import { createService, updateService } from "../../services/api";
+import { createService, updateService } from "../../../services/api";
 
-export const NewServiceContext = createContext({
+const NewServiceContext = createContext({
   state: {
     description: "",
     price: "",
     estimatedTime: "",
     image: "",
-    isLoading: false
+    isLoading: false,
   },
   handleChange: () => {},
   onSubmit: () => {},
   goBack: () => {},
 });
 
-export const NewServiceProvider = ({ children }) => {
+const NewServiceProvider = ({ children }) => {
   const location = useLocation();
   const history = useHistory();
 
@@ -28,14 +28,14 @@ export const NewServiceProvider = ({ children }) => {
     estimatedTime: "",
     image: "",
     isLoading: false,
-    isEditing: false
+    isEditing: false,
   });
 
   useEffect(() => {
     if (location.state && location.state.service) {
-      setState(() => ({...location.state.service, isEditing: true}))
+      setState(() => ({ ...location.state.service, isEditing: true }));
     }
-  }, [])
+  }, [location.state]);
 
   const validate = ({ description, price, estimatedTime, image }) => {
     if (!description || !price || !estimatedTime || !image) return false;
@@ -63,9 +63,9 @@ export const NewServiceProvider = ({ children }) => {
         description: state.description,
         price: state.price,
         estimatedTime: state.estimatedTime,
-        image: state.image
+        image: state.image,
       });
-  
+
       if (service) {
         goBack();
         toast.success("Serviço cadastrado com sucesso!");
@@ -76,9 +76,9 @@ export const NewServiceProvider = ({ children }) => {
         description: state.description,
         price: state.price,
         estimatedTime: state.estimatedTime,
-        image: state.image
+        image: state.image,
       };
-      await updateService(service)
+      await updateService(service);
       goBack();
       toast.success("Serviço editado com sucesso!");
     }
@@ -86,7 +86,7 @@ export const NewServiceProvider = ({ children }) => {
   };
 
   const goBack = () => {
-    history.push("/");
+    history.push("/barber");
   };
 
   return (
@@ -102,3 +102,14 @@ export const NewServiceProvider = ({ children }) => {
     </NewServiceContext.Provider>
   );
 };
+
+function useNewService() {
+  const context = useContext(NewServiceContext);
+  if (!context) {
+    throw new Error("useNewService must be used within an NewServiceProvider.");
+  }
+
+  return context;
+}
+
+export { useNewService, NewServiceProvider };

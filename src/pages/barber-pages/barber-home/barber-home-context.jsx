@@ -1,21 +1,20 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useCallback, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { toast } from "react-toastify";
-import { clearLocalStorage } from "../../infra";
+import { clearLocalStorage } from "../../../infra";
 import {
   deleteService,
   findCurrentBarberServices,
-} from "../../services/api";
+} from "../../../services/api";
 
-export const HomeContext = createContext({
+export const BarberHomeContext = createContext({
   state: {
     services: [],
     isLoading: false,
     dialog: {
       id: "",
       open: false,
-      description: ""
-    }
+      description: "",
+    },
   },
   findServices: () => {},
   onLogOut: () => {},
@@ -23,10 +22,10 @@ export const HomeContext = createContext({
   onCloseDialog: () => {},
   onDelete: () => {},
   onCreateService: () => {},
-  onEditService: () => {}
+  onEditService: () => {},
 });
 
-export const HomeProvider = ({ children }) => {
+const BarberHomeProvider = ({ children }) => {
   const history = useHistory();
   const [state, setState] = useState({
     services: [],
@@ -34,15 +33,15 @@ export const HomeProvider = ({ children }) => {
     dialog: {
       id: "",
       open: false,
-      description: ""
-    }
+      description: "",
+    },
   });
 
-  const findServices = async () => {
+  const findServices = useCallback(async () => {
     setState((old) => ({ ...old, isLoading: true }));
     const services = await findCurrentBarberServices();
     setState((old) => ({ ...old, isLoading: false, services: services || [] }));
-  };
+  }, []);
 
   const onLogOut = () => {
     clearLocalStorage();
@@ -50,55 +49,55 @@ export const HomeProvider = ({ children }) => {
   };
 
   const onOpenDeleteConfirmDialog = (id, description) => {
-    setState(old => ({
+    setState((old) => ({
       ...old,
       dialog: {
         id: id,
         open: true,
-        description: description
-      }
-    }))
-  }
+        description: description,
+      },
+    }));
+  };
 
   const onCloseDialog = () => {
-    setState(old => ({
+    setState((old) => ({
       ...old,
       dialog: {
         id: "",
         open: false,
-        description: ""
-      }
-    }))
-  }
+        description: "",
+      },
+    }));
+  };
 
   const onDelete = async (serviceId) => {
     setState((old) => ({ ...old, isLoading: true }));
     await deleteService(serviceId);
     await findServices();
-    setState((old) => ({ 
-      ...old, 
-      isLoading: false , 
+    setState((old) => ({
+      ...old,
+      isLoading: false,
       dialog: {
         id: "",
         open: false,
-        description: ""
-      }
+        description: "",
+      },
     }));
   };
 
   const onCreateService = () => {
-    history.push('./new-service')
-  }
+    history.push("/barber/new-service");
+  };
 
   const onEditService = (service) => {
-      history.push({
-        pathname: './new-service',
-        state: {service: service}
-      })
-  }
+    history.push({
+      pathname: "/barber/new-service",
+      state: { service: service },
+    });
+  };
 
   return (
-    <HomeContext.Provider
+    <BarberHomeContext.Provider
       value={{
         state,
         findServices,
@@ -107,10 +106,21 @@ export const HomeProvider = ({ children }) => {
         onCloseDialog,
         onDelete,
         onCreateService,
-        onEditService
+        onEditService,
       }}
     >
       {children}
-    </HomeContext.Provider>
+    </BarberHomeContext.Provider>
   );
 };
+
+function useBarberHome() {
+  const context = useContext(BarberHomeContext);
+  if (!context) {
+    throw new Error("useBarberHome must be used within an BarberHomeProvider.");
+  }
+
+  return context;
+}
+
+export { useBarberHome, BarberHomeProvider };

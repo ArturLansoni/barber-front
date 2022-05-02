@@ -1,8 +1,8 @@
 import React from "react";
-import { Button, Spinner } from "../../../../components";
-import ScheduleIcon from '@mui/icons-material/Schedule';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import ClearIcon from '@mui/icons-material/Clear';
+import ScheduleIcon from "@mui/icons-material/Schedule";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import ClearIcon from "@mui/icons-material/Clear";
+import { Button, Spinner } from "../../../../../components";
 
 const ServiceItem = ({
   isLoading = false,
@@ -11,7 +11,7 @@ const ServiceItem = ({
   image = "",
   estimatedTime = "",
   onEdit = () => {},
-  onDelete = () => { },
+  onDelete = () => {},
 }) => (
   <li>
     {image ? (
@@ -23,7 +23,7 @@ const ServiceItem = ({
       <div>
         <h3>{description}</h3>
         <h4>
-          <ScheduleIcon fontSize="small"/>
+          <ScheduleIcon fontSize="small" />
           {estimatedTime} min
         </h4>
       </div>
@@ -31,12 +31,16 @@ const ServiceItem = ({
         <p>R${price.toFixed(2).replace(".", ",")}</p>
         <div className="button-container">
           <Button color="secondary" onClick={onEdit} type="button">
-            {isLoading && <Spinner animation="border" role="status" size="sm" />}
-            <EditOutlinedIcon/>
+            {isLoading && (
+              <Spinner animation="border" role="status" size="sm" />
+            )}
+            <EditOutlinedIcon />
           </Button>
           <Button color="error" onClick={onDelete} type="button">
-            {isLoading && <Spinner animation="border" role="status" size="sm" />}
-            <ClearIcon/>
+            {isLoading && (
+              <Spinner animation="border" role="status" size="sm" />
+            )}
+            <ClearIcon />
           </Button>
         </div>
       </div>

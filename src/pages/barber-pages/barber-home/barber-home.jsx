@@ -1,15 +1,17 @@
-import React, { useContext, useEffect } from "react";
-import { Button, Spinner } from "../../components";
-import { ServiceItem, NewServiceItem } from "./sub-components";
-import { HomeContext, HomeProvider } from "./home-context";
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import "./home-styles.css";
+import React, { useEffect } from "react";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
+import { Button, Spinner } from "../../../components";
+import { ServiceItem } from "./sub-components";
+import { BarberHomeProvider, useBarberHome } from "./barber-home-context";
+import "./barber-home-styles.css";
 
-const HomePage = () => {
+const BarberHomePage = () => {
   const {
     state,
     findServices,
@@ -18,8 +20,8 @@ const HomePage = () => {
     onCloseDialog,
     onDelete,
     onCreateService,
-    onEditService
-  } = useContext(HomeContext);
+    onEditService,
+  } = useBarberHome();
 
   useEffect(() => {
     findServices();
@@ -63,17 +65,21 @@ const HomePage = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">Remover serviço</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             {`Você tem certeza que deseja excluir ${state.dialog.description}?`}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onCloseDialog} variant="outlined" color="error">Cancelar</Button>
-          <Button onClick={() => onDelete(state.dialog.id)} autoFocus color="secondary">
+          <Button onClick={onCloseDialog} variant="outlined" color="error">
+            Cancelar
+          </Button>
+          <Button
+            onClick={() => onDelete(state.dialog.id)}
+            autoFocus
+            color="secondary"
+          >
             Excluir
           </Button>
         </DialogActions>
@@ -83,9 +89,9 @@ const HomePage = () => {
 };
 
 const Page = () => (
-  <HomeProvider>
-    <HomePage />
-  </HomeProvider>
+  <BarberHomeProvider>
+    <BarberHomePage />
+  </BarberHomeProvider>
 );
 
 export default Page;

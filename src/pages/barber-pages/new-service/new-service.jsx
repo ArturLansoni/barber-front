@@ -1,15 +1,17 @@
-import React, { useContext } from "react";
-import { Button, Input } from "../../components";
-import { NewServiceContext, NewServiceProvider } from "./new-service-context";
+import React from "react";
+import { TextField } from "@mui/material";
+import {
+  Description as DescriptionIcon,
+  AttachMoney as AttachMoneyIcon,
+  Schedule as ScheduleIcon,
+  Image as ImageIcon,
+} from "@mui/icons-material";
+import { Button } from "../../../components";
+import { NewServiceProvider, useNewService } from "./new-service-context";
 import "./new-service-styles.css";
-import {TextField} from "@mui/material";
-import DescriptionIcon from '@mui/icons-material/Description';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import ScheduleIcon from '@mui/icons-material/Schedule';
-import ImageIcon from '@mui/icons-material/Image';
 
 const NewServicePage = () => {
-  const { state, handleChange, onSubmit, goBack } = useContext(NewServiceContext);
+  const { state, handleChange, onSubmit, goBack } = useNewService();
 
   return (
     <div className="new-service-page-container">
@@ -21,7 +23,7 @@ const NewServicePage = () => {
           variant="outlined"
           value={state.description}
           onChange={handleChange}
-          InputProps={{startAdornment: <DescriptionIcon/>}}
+          InputProps={{ startAdornment: <DescriptionIcon /> }}
         />
 
         <TextField
@@ -31,7 +33,7 @@ const NewServicePage = () => {
           variant="outlined"
           value={state.price}
           onChange={handleChange}
-          InputProps={{startAdornment: <AttachMoneyIcon/>}}
+          InputProps={{ startAdornment: <AttachMoneyIcon /> }}
         />
 
         <TextField
@@ -41,7 +43,7 @@ const NewServicePage = () => {
           variant="outlined"
           value={state.estimatedTime}
           onChange={handleChange}
-          InputProps={{startAdornment: <ScheduleIcon/>}}
+          InputProps={{ startAdornment: <ScheduleIcon /> }}
         />
 
         <TextField
@@ -50,12 +52,11 @@ const NewServicePage = () => {
           variant="outlined"
           value={state.image}
           onChange={handleChange}
-          InputProps={{startAdornment: <ImageIcon/>}}
+          InputProps={{ startAdornment: <ImageIcon /> }}
         />
 
-
         <Button type="submit" isLoading={state.isLoading}>
-          {state.isEditing ? 'Salvar' : 'Criar'}
+          {state.isEditing ? "Salvar" : "Criar"}
         </Button>
         <Button variant="outline" onClick={goBack}>
           Voltar

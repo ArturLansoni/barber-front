@@ -1,11 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Button, Input } from "../../components";
-import { LoginContext, LoginProvider } from "./login-context";
+import { LoginProvider, useLogin } from "./login-context";
 import "./login-styles.css";
 
 const LoginPage = () => {
-  const { state, handleChange, onSubmit, goToRegisterPage } =
-    useContext(LoginContext);
+  const { state, handleChange, onSubmit, goToRegisterPage } = useLogin();
 
   return (
     <div className="login-page-container">
