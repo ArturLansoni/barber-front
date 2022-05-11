@@ -44,6 +44,11 @@ export const findCurrentBarberServices = async () => {
   return handleResponse(response);
 };
 
+export const findBarberServices = async () => {
+  const response = await httpClient.get("/barber").catch(handleError);
+  return handleResponse(response);
+};
+
 export const createService = async (service) => {
   const response = await httpClient
     .post("/service", service)
