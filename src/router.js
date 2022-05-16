@@ -8,6 +8,7 @@ import {
   SignUpPage,
   ClientHomePage,
   NewServicePage,
+  ClientServicePage,
 } from "./pages";
 import theme from "./styles/theme";
 import { Layout } from "./components";
@@ -27,6 +28,10 @@ const Router = () => (
               component={() => <NewServicePage />}
             />
             <Route exact path="/client" component={() => <ClientHomePage />} />
+            <Route
+              path="/client/services"
+              component={() => <ClientServicePage />}
+            />
           </Switch>
         </Layout>
       </ApplicationProvider>

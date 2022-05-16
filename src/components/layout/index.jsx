@@ -4,9 +4,21 @@ import { Header } from "../";
 
 export function Layout({ children }) {
   return (
-    <Box sx={{ backgroundColor: "#f4f4f4", height: "100vh", width: "100vw" }}>
+    <Box
+      sx={{
+        height: "100vh",
+        width: "100vw",
+        overflowY: "scroll",
+        overflowX: "hidden",
+        maxWidth: "100%",
+      }}
+    >
       <Header />
-      <Box sx={{ height: "100%", width: "100%" }}>{children}</Box>
+      <Box
+        sx={{ height: "calc(100vh - 80px)", width: "100%", marginTop: "100px" }}
+      >
+        {children}
+      </Box>
     </Box>
   );
 }

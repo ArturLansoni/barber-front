@@ -1,27 +1,32 @@
-import React, { createContext, useContext, useState } from "react";
-import { findBarberServices } from "../../../services/api";
+import React, { createContext, useCallback, useContext, useState } from "react";
+import { findBarbers } from "../../../services/api";
 
 const ClientHomeContext = createContext({
-  state: {
-    isLoading: false,
-  },
+  isLoading: false,
+  services: [],
   findBarbers: () => {},
 });
 
 const ClientHomeProvider = ({ children }) => {
-  const [state] = useState({
+  const [state, setState] = useState({
     isLoading: false,
+    services: [],
   });
 
-  const findBarbers = async () => {
-    const response = await findBarberServices();
-    console.log(response);
-  };
+  const findBarbers = useCallback(async () => {
+    setState((old) => ({ ...old, isLoading: true }));
+    const response = await findBarbers();
+
+    if (response) {
+      setState((old) => ({ ...old, services: response }));
+    }
+    setState((old) => ({ ...old, isLoading: false }));
+  }, []);
 
   return (
     <ClientHomeContext.Provider
       value={{
-        state,
+        ...state,
         findBarbers,
       }}
     >

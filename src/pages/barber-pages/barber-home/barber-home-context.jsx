@@ -17,7 +17,6 @@ export const BarberHomeContext = createContext({
     },
   },
   findServices: () => {},
-  onLogOut: () => {},
   onOpenDeleteConfirmDialog: () => {},
   onCloseDialog: () => {},
   onDelete: () => {},
@@ -42,11 +41,6 @@ const BarberHomeProvider = ({ children }) => {
     const services = await findCurrentBarberServices();
     setState((old) => ({ ...old, isLoading: false, services: services || [] }));
   }, []);
-
-  const onLogOut = () => {
-    clearLocalStorage();
-    history.push("/login");
-  };
 
   const onOpenDeleteConfirmDialog = (id, description) => {
     setState((old) => ({
@@ -101,7 +95,6 @@ const BarberHomeProvider = ({ children }) => {
       value={{
         state,
         findServices,
-        onLogOut,
         onOpenDeleteConfirmDialog,
         onCloseDialog,
         onDelete,

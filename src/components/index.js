@@ -3,3 +3,4 @@ export * from "./spinner";
 export * from "./input";
 export * from "./header";
 export * from "./layout";
+export * from "./image";

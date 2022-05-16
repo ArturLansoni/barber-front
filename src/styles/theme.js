@@ -4,6 +4,7 @@ const theme = createTheme({
   palette: {
     primary: {
       main: "#003058",
+      light: "#BFCDDD",
     },
     secondary: {
       main: "#3A5985",
@@ -13,7 +14,14 @@ const theme = createTheme({
     MuiButtonBase: {
       styleOverrides: {
         root: {
-          borderRadius: "10px",
+          borderRadius: "8px",
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: "8px",
         },
       },
     },

@@ -1,8 +1,9 @@
 import axios from "axios";
+import { API_URL } from "../constants";
 import { getAccessToken } from "../local-storage/local-storage";
 
 const api = axios.create({
-  baseURL: "http://localhost:4000",
+  baseURL: API_URL,
 });
 
 api.interceptors.request.use(async (config) => {

@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import { useHistory } from "react-router-dom";
-import { getAccessToken } from "../infra";
+import { clearLocalStorage, getAccessToken } from "../infra";
 import { findCurrentUser } from "../services/api";
 
 const ApplicationContext = createContext({
@@ -14,6 +14,7 @@ const ApplicationContext = createContext({
   userType: "",
   setUser: () => {},
   setUserType: () => {},
+  logOut: () => {},
 });
 
 const ApplicationProvider = ({ children }) => {
@@ -37,23 +38,28 @@ const ApplicationProvider = ({ children }) => {
       setUser(user);
       setUserType(userType);
     }
-    if (
-      state.userType === "BARBER" &&
-      !history.location.pathname.includes("/barber")
-    ) {
-      history.push("/barber");
-    }
-    if (
-      state.userType === "CLIENT" &&
-      !history.location.pathname.includes("/client")
-    ) {
-      history.push("/client");
-    }
+    // if (
+    //   state.userType === "BARBER" &&
+    //   !history.location.pathname.includes("/barber")
+    // ) {
+    //   history.push("/barber");
+    // }
+    // if (
+    //   state.userType === "CLIENT" &&
+    //   !history.location.pathname.includes("/client")
+    // ) {
+    //   history.push("/client");
+    // }
   }, [history, accessToken, state]);
 
   useEffect(() => {
     validateUser();
   }, [validateUser]);
+
+  const logOut = () => {
+    clearLocalStorage();
+    history.push("/login");
+  };
 
   const setUser = (user) => setState((old) => ({ ...old, user }));
   const setUserType = (userType) => setState((old) => ({ ...old, userType }));
@@ -64,6 +70,7 @@ const ApplicationProvider = ({ children }) => {
         ...state,
         setUser,
         setUserType,
+        logOut,
       }}
     >
       {children}

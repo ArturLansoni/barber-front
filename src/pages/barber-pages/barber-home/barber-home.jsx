@@ -15,7 +15,6 @@ const BarberHomePage = () => {
   const {
     state,
     findServices,
-    onLogOut,
     onOpenDeleteConfirmDialog,
     onCloseDialog,
     onDelete,
@@ -25,17 +24,10 @@ const BarberHomePage = () => {
 
   useEffect(() => {
     findServices();
-  }, []);
+  }, [findServices]);
 
   return (
     <div className="home-page-container">
-      <header>
-        <h1>Barberbook</h1>
-        <Button color="error" onClick={onLogOut}>
-          LOGOUT
-        </Button>
-      </header>
-
       <div className="home-title">
         <h2>Serviços</h2>
         <Button type="button" color="secondary" onClick={onCreateService}>
