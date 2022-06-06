@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/barber-front/static/css/main.e9e6967d.chunk.css",
-    "main.js": "/barber-front/static/js/main.763ad8e3.chunk.js",
-    "main.js.map": "/barber-front/static/js/main.763ad8e3.chunk.js.map",
+    "main.js": "/barber-front/static/js/main.fc7b6f2c.chunk.js",
+    "main.js.map": "/barber-front/static/js/main.fc7b6f2c.chunk.js.map",
     "runtime-main.js": "/barber-front/static/js/runtime-main.5e3584f8.js",
     "runtime-main.js.map": "/barber-front/static/js/runtime-main.5e3584f8.js.map",
     "static/css/2.68b64559.chunk.css": "/barber-front/static/css/2.68b64559.chunk.css",
@@ -21,6 +21,6 @@
     "static/css/2.68b64559.chunk.css",
     "static/js/2.50f21bc9.chunk.js",
     "static/css/main.e9e6967d.chunk.css",
-    "static/js/main.763ad8e3.chunk.js"
+    "static/js/main.fc7b6f2c.chunk.js"
   ]
 }
