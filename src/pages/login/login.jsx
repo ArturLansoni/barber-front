@@ -24,7 +24,7 @@ const LoginPage = () => {
           value={state.password}
           onChange={handleChange}
         />
-        <Button type="submit" isLoading={state.isLoading}>
+        <Button onClick={onSubmit} isLoading={state.isLoading}>
           Login
         </Button>
         <Button variant="outline" onClick={goToRegisterPage}>

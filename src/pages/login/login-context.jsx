@@ -5,6 +5,11 @@ import { useApp } from "../../context/application-context";
 import { setAccessToken } from "../../infra";
 import { login } from "../../services/api";
 
+const validate = ({ email, password }) => {
+  if (!email || !password) return false;
+  return true;
+};
+
 const LoginContext = createContext({
   state: {
     email: "",
@@ -24,11 +29,6 @@ const LoginProvider = ({ children }) => {
     password: "",
     isLoading: false,
   });
-
-  const validate = ({ email, password }) => {
-    if (!email || !password) return false;
-    return true;
-  };
 
   const handleChange = (e) => {
     setState((old) => ({ ...old, [e.target.id]: e.target.value }));
@@ -57,8 +57,10 @@ const LoginProvider = ({ children }) => {
       setAccessToken(user.accessToken);
       if (userType === "BARBER") {
         history.push("/barber");
+        history.go(0);
       } else if (userType === "CLIENT") {
         history.push("/client");
+        history.go(0);
       }
     }
     setState((old) => ({ ...old, isLoading: false }));

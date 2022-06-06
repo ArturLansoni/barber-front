@@ -1,12 +1,6 @@
 import React, { useEffect } from "react";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@mui/material";
-import { Button, Spinner } from "../../../components";
+import { Box, Typography } from "@mui/material";
+import { Button, DialogConfirmation, Spinner } from "../../../components";
 import { ServiceItem } from "./sub-components";
 import { BarberHomeProvider, useBarberHome } from "./barber-home-context";
 import "./barber-home-styles.css";
@@ -27,15 +21,22 @@ const BarberHomePage = () => {
   }, [findServices]);
 
   return (
-    <div className="home-page-container">
-      <div className="home-title">
-        <h2>Serviços</h2>
-        <Button type="button" color="secondary" onClick={onCreateService}>
-          + Novo Serviço
+    <Box sx={{ height: "100%", marginX: "32px" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginBottom: "48px",
+        }}
+      >
+        <Typography variant="h4">Serviços</Typography>
+        <Button color="secondary" onClick={onCreateService}>
+          Novo Serviço
         </Button>
-      </div>
+      </Box>
 
-      <ul>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: "12px" }}>
         {!state.services.length && state.isLoading && <Spinner />}
         {state.services.map((i) => (
           <ServiceItem
@@ -49,34 +50,27 @@ const BarberHomePage = () => {
             onDelete={() => onOpenDeleteConfirmDialog(i._id, i.description)}
           />
         ))}
-      </ul>
-
-      <Dialog
-        open={state.dialog.open}
+      </Box>
+      <DialogConfirmation
+        isOpen={state.dialog.open}
         onClose={onCloseDialog}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">Remover serviço</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            {`Você tem certeza que deseja excluir ${state.dialog.description}?`}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={onCloseDialog} variant="outlined" color="error">
-            Cancelar
-          </Button>
-          <Button
-            onClick={() => onDelete(state.dialog.id)}
-            autoFocus
-            color="secondary"
-          >
-            Excluir
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+        onSubmit={() => onDelete(state.dialog.id)}
+        type="ERROR"
+        submitText="Remover"
+        title="Remover serviço"
+        description={`Você tem certeza que deseja excluir ${state.dialog.description}?`}
+      />
+      {state.isLoading && (
+        <Typography textAlign="center" sx={{ paddingTop: 4 }}>
+          <Spinner /> Buscando serviços...
+        </Typography>
+      )}
+      {state.services.length === 0 && !state.isLoading && (
+        <Typography textAlign="center" sx={{ paddingTop: 4 }}>
+          Nenhum serviço foi encontrado
+        </Typography>
+      )}
+    </Box>
   );
 };
 

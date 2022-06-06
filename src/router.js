@@ -8,7 +8,11 @@ import {
   SignUpPage,
   ClientHomePage,
   NewServicePage,
-  ClientServicePage,
+  ClientCheckoutPage,
+  ClientSchedulePage,
+  ClientScheduleDetailPage,
+  BarberSchedulePage,
+  BarberScheduleDetailPage,
 } from "./pages";
 import theme from "./styles/theme";
 import { Layout } from "./components";
@@ -17,23 +21,45 @@ const Router = () => (
   <BrowserRouter>
     <ThemeProvider theme={theme}>
       <ApplicationProvider>
-        <Layout>
-          <Switch>
+        <Switch>
+          <Layout>
             <Route exact path="/login" component={() => <LoginPage />} />
             <Route exact path="/sign-up" component={() => <SignUpPage />} />
+            {/* Barber routes */}
             <Route exact path="/barber" component={() => <BarberHomePage />} />
             <Route
               exact
               path="/barber/new-service"
               component={() => <NewServicePage />}
             />
+            <Route
+              exact
+              path="/barber/schedule"
+              component={() => <BarberSchedulePage />}
+            />
+            <Route
+              exact
+              path="/barber/schedule/detail/:scheduleId"
+              component={() => <BarberScheduleDetailPage />}
+            />
+            {/* Client routes */}
             <Route exact path="/client" component={() => <ClientHomePage />} />
             <Route
-              path="/client/services"
-              component={() => <ClientServicePage />}
+              exact
+              path="/client/offers/:barberId"
+              component={() => <ClientCheckoutPage />}
             />
-          </Switch>
-        </Layout>
+            <Route
+              exact
+              path="/client/schedule"
+              component={() => <ClientSchedulePage />}
+            />
+            <Route
+              path="/client/schedule/detail/:scheduleId"
+              component={() => <ClientScheduleDetailPage />}
+            />
+          </Layout>
+        </Switch>
       </ApplicationProvider>
     </ThemeProvider>
   </BrowserRouter>

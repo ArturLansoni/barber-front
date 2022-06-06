@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useContext, useState } from "react";
-import { findBarbers } from "../../../services/api";
+import { findBarbers as findBarbersApi } from "../../../services/api";
 
 const ClientHomeContext = createContext({
   isLoading: false,
@@ -15,7 +15,7 @@ const ClientHomeProvider = ({ children }) => {
 
   const findBarbers = useCallback(async () => {
     setState((old) => ({ ...old, isLoading: true }));
-    const response = await findBarbers();
+    const response = await findBarbersApi();
 
     if (response) {
       setState((old) => ({ ...old, services: response }));

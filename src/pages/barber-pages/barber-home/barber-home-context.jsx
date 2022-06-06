@@ -1,6 +1,5 @@
 import React, { createContext, useCallback, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { clearLocalStorage } from "../../../infra";
 import {
   deleteService,
   findCurrentBarberServices,

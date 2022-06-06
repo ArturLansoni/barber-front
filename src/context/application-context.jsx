@@ -27,7 +27,12 @@ const ApplicationProvider = ({ children }) => {
   });
 
   const validateUser = useCallback(async () => {
-    if (["/login", "/sign-up"].includes(history.location.pathname)) return;
+    if (
+      ["/login", "/sign-up"].includes(history.location.pathname) &&
+      !accessToken
+    )
+      return;
+
     if (!accessToken) {
       history.push("/login");
       return;
@@ -38,18 +43,18 @@ const ApplicationProvider = ({ children }) => {
       setUser(user);
       setUserType(userType);
     }
-    // if (
-    //   state.userType === "BARBER" &&
-    //   !history.location.pathname.includes("/barber")
-    // ) {
-    //   history.push("/barber");
-    // }
-    // if (
-    //   state.userType === "CLIENT" &&
-    //   !history.location.pathname.includes("/client")
-    // ) {
-    //   history.push("/client");
-    // }
+    if (
+      state.userType === "BARBER" &&
+      !history.location.pathname.includes("/barber")
+    ) {
+      history.push("/barber");
+    }
+    if (
+      state.userType === "CLIENT" &&
+      !history.location.pathname.includes("/client")
+    ) {
+      history.push("/client");
+    }
   }, [history, accessToken, state]);
 
   useEffect(() => {

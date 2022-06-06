@@ -1,4 +1,5 @@
 import React from "react";
+import "./index.css";
 
 const IMAGE_PLACEHOLDER = "https://via.placeholder.com/150";
 
