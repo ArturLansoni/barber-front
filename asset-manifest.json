@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/barber-front/static/css/main.e9e6967d.chunk.css",
+    "main.js": "/barber-front/static/js/main.763ad8e3.chunk.js",
+    "main.js.map": "/barber-front/static/js/main.763ad8e3.chunk.js.map",
+    "runtime-main.js": "/barber-front/static/js/runtime-main.5e3584f8.js",
+    "runtime-main.js.map": "/barber-front/static/js/runtime-main.5e3584f8.js.map",
+    "static/css/2.68b64559.chunk.css": "/barber-front/static/css/2.68b64559.chunk.css",
+    "static/js/2.50f21bc9.chunk.js": "/barber-front/static/js/2.50f21bc9.chunk.js",
+    "static/js/2.50f21bc9.chunk.js.map": "/barber-front/static/js/2.50f21bc9.chunk.js.map",
+    "index.html": "/barber-front/index.html",
+    "static/css/2.68b64559.chunk.css.map": "/barber-front/static/css/2.68b64559.chunk.css.map",
+    "static/css/main.e9e6967d.chunk.css.map": "/barber-front/static/css/main.e9e6967d.chunk.css.map",
+    "static/js/2.50f21bc9.chunk.js.LICENSE.txt": "/barber-front/static/js/2.50f21bc9.chunk.js.LICENSE.txt",
+    "static/media/barber-background.473224a5.jpg": "/barber-front/static/media/barber-background.473224a5.jpg",
+    "static/media/index.css": "/barber-front/static/media/bg.0494e96b.jpg",
+    "static/media/success-illustration.91ffba69.svg": "/barber-front/static/media/success-illustration.91ffba69.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.5e3584f8.js",
+    "static/css/2.68b64559.chunk.css",
+    "static/js/2.50f21bc9.chunk.js",
+    "static/css/main.e9e6967d.chunk.css",
+    "static/js/main.763ad8e3.chunk.js"
+  ]
+}
