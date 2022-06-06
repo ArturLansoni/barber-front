@@ -61,13 +61,21 @@ const ServiceItem = ({
           <ClearIcon />
         </Button>
       </Box>
-      <Box>
-        <Typography variant="h6">{description}</Typography>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
+      >
+        <Typography variant="h6" fontWeight="medium">
+          {description}
+        </Typography>
         <Typography variant="body2" color="text.secondary">
           {estimatedTime} min
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          R${price?.toFixed(2).replace(".", ",")}
+        <Typography variant="h5" color="text.secondary">
+          R${Number(price)?.toFixed(2).replace(".", ",")}
         </Typography>
       </Box>
     </CardContent>

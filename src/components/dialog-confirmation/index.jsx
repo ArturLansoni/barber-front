@@ -31,8 +31,11 @@ export function DialogConfirmation({
           color={type === "CONFIRM" ? "primary" : "error"}
           onClick={onSubmit}
         >
-          {submitText}
-          {type === "CONFIRM" && !submitText ? "Confirmar" : "Recusar"}
+          {submitText
+            ? submitText
+            : type === "CONFIRM"
+            ? "Confirmar"
+            : "Recusar"}
         </Button>
       </DialogActions>
     </Dialog>
