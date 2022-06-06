@@ -4,7 +4,12 @@ import { Spinner } from "..";
 
 export function Button({ children, color, isLoading, ...props }) {
   return (
-    <MUIButton color={color} variant="contained" {...props}>
+    <MUIButton
+      color={color}
+      variant="contained"
+      {...props}
+      onClick={isLoading ? null : props.onClick}
+    >
       {isLoading && <Spinner />}
       {!isLoading && children}
     </MUIButton>

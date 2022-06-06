@@ -34,8 +34,8 @@ export const findCurrentUser = async () => {
   return handleResponse(response);
 };
 
-export const createBarber = async (barber) => {
-  const response = await httpClient.post("/barber", barber).catch(handleError);
+export const createClient = async (client) => {
+  const response = await httpClient.post("/client", client).catch(handleError);
   return handleResponse(response);
 };
 
@@ -49,8 +49,20 @@ export const findBarbers = async () => {
   return handleResponse(response);
 };
 
-export const findBarberServices = async () => {
-  const response = await httpClient.get("/barber").catch(handleError);
+export const findBarberDetails = async (id) => {
+  const response = await httpClient.get(`/barber/${id}`).catch(handleError);
+  return handleResponse(response);
+};
+
+export const findBarberServices = async (id) => {
+  const response = await httpClient.get(`/offers/${id}`).catch(handleError);
+  return handleResponse(response);
+};
+
+export const submitSchedule = async (schedule) => {
+  const response = await httpClient
+    .post("/schedule", schedule)
+    .catch(handleError);
   return handleResponse(response);
 };
 
@@ -71,6 +83,22 @@ export const deleteService = async (serviceId) => {
 export const updateService = async (service) => {
   const response = await httpClient
     .put(`/service/${service._id}`, service)
+    .catch(handleError);
+  return handleResponse(response);
+};
+
+export const findSchedules = async () => {
+  const response = await httpClient.get(`/schedule/me`).catch(handleError);
+  return handleResponse(response);
+};
+
+export const findScheduleDetail = async (id) => {
+  const response = await httpClient.get(`/schedule/${id}`).catch(handleError);
+  return handleResponse(response);
+};
+export const updateSchedule = async (id, schedule) => {
+  const response = await httpClient
+    .put(`/schedule/${id}`, schedule)
     .catch(handleError);
   return handleResponse(response);
 };

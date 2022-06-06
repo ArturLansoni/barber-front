@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-import { createBarber } from "../../services/api";
+import { createClient } from "../../services/api";
 
 const SignUpContext = createContext({
   state: {
@@ -47,7 +47,7 @@ const SignUpProvider = ({ children }) => {
       return;
     }
 
-    const barber = await createBarber({
+    const barber = await createClient({
       name: state.name,
       email: state.email,
       password: state.password,
@@ -55,7 +55,7 @@ const SignUpProvider = ({ children }) => {
 
     if (barber) {
       history.push("/login");
-      toast.success("Barbeiro cadastrado com sucesso!");
+      toast.success("Cliente cadastrado com sucesso!");
     }
     setState((old) => ({ ...old, isLoading: false }));
   };
